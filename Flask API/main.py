@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse, abort
-from flask_sqlalchemy import SQLAlchemy,
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 api = Api(app)
@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 class VideoModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    
+
 
 db.create_all()
 
