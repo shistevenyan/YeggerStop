@@ -6,16 +6,21 @@ from math import cos, asin, sqrt
 from google.transit import gtfs_realtime_pb2
 
 
-def get_stops(stop_id):
+def get_stop_times(address):
     """gets the trip of a particular bus"""
 
+    closest_stops = find_closest_stops(address)
     # gets when the bus is expected to come and to what stop
     live_stop_url = "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb"
     live_stop_feed = gtfs_realtime_pb2.FeedMessage()
     live_stop_response = requests.get(live_stop_url)
     live_stop_feed.ParseFromString(live_stop_response.content)
 
-    print(live_stop_feed)
+    for entity in live_stop_feed.entity:
+        for each in entity.trip_update.stop_time_update:
+            if each.stop_id == "9174":
+                print(entity.trip_update.trip.route_id)
+                print(each)
 
 
 def find_closest_stops(address):
@@ -28,8 +33,7 @@ def find_closest_stops(address):
     static_stop_response = requests.get(static_stop_url)
     static_stop_data = static_stop_response.json()
     static_stop_data = sorted(static_stop_data, key=lambda d: distance(d["stop_lat"], d["stop_lon"], latLongAddress['lat'], latLongAddress['lng']))
-    print(static_stop_data[:3])
-
+    return static_stop_data[:3]
 
 def distance(lon1, lat1, lon2, lat2):
     R = 6371000  # radius of the Earth in m
@@ -42,5 +46,4 @@ def distance(lon1, lat1, lon2, lat2):
     y = (lat2 - lat1)
     return R * sqrt(x*x + y*y)
 
-
-find_closest_stops("11713 17 Ave. SW Edmonton, AB")
+get_stop_times("11713 17 Ave. SW Edmonton, Alberta, Canada")
