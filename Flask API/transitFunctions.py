@@ -2,13 +2,14 @@ import requests
 import time
 import datetime
 import pytz
-from math import cos, asin, sqrt
+from math import cos, sqrt
 from google.transit import gtfs_realtime_pb2
 
 
 def get_stop_times(address):
     """gets the trip of a particular bus"""
 
+    stop_results = []
     closest_stops = find_closest_stops(address)
     # gets when the bus is expected to come and to what stop
     live_stop_url = "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb"
