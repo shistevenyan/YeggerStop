@@ -5,27 +5,48 @@ import pytz
 from math import cos, sqrt
 from google.transit import gtfs_realtime_pb2
 
-
 def get_stop_times(address):
-    """gets the trip of a particular bus"""
-
     stop_results = []
     closest_stops = find_closest_stops(address)
-    # gets when the bus is expected to come and to what stop
+
     live_stop_url = "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb"
     live_stop_feed = gtfs_realtime_pb2.FeedMessage()
     live_stop_response = requests.get(live_stop_url)
     live_stop_feed.ParseFromString(live_stop_response.content)
+
+    i = 0
     for stop in closest_stops:
-        print(stop["stop_id"], stop["stop_name"])
+        stop_results.append([stop['stop_id'], stop['stop_name']])
         for entity in live_stop_feed.entity:
             for each in entity.trip_update.stop_time_update:
                 if each.stop_id == stop["stop_id"]:
-                    print(entity.trip_update.trip.route_id)
                     time = each.departure.time
                     if not time:
                         time = each.arrival.time
-                    print(time)
+                    print(entity)
+                    location = find_bus_location(entity.id)
+                    stop_results[i].append([entity.trip_update.trip.route_id, location, time])
+        i += 1
+
+    stop_results_json = {}
+    for i in range(len(stop_results)):
+        stop_results_json[i] = stop_results[i]
+    
+    print(stop_results_json)
+
+def find_bus_location(trip_id):
+    live_position_url = "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.pb"
+    live_position_feed = gtfs_realtime_pb2.FeedMessage()
+    live_position_response = requests.get(live_position_url)
+    live_position_feed.ParseFromString(live_position_response.content)
+
+    for entity in live_position_feed.entity:
+        if entity.vehicle.trip.trip_id == trip_id:
+            bus_position = str(entity.vehicle.position.latitude) + ',' + str(entity.vehicle.position.longitude)
+            # response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + str(entity.vehicle.position.latitude) + ',' + str(entity.vehicle.position.longitude) + '&key=AIzaSyCojSgnjODZ71ywFILooMge4RtrVeDh2TQ')
+            # reverse_geocode = response.json()
+            # bus_position = reverse_geocode['results'][1]['formatted_address']  
+            return bus_position
 
 
 def find_closest_stops(address):
@@ -38,13 +59,11 @@ def find_closest_stops(address):
     static_stop_response = requests.get(static_stop_url)
     static_stop_data = static_stop_response.json()
     static_stop_data = sorted(static_stop_data, key=lambda d: distance(d["stop_lat"], d["stop_lon"], lat_long_address['lat'], lat_long_address['lng']))
+
     return static_stop_data[:3]
 
-def abc():
-    bus_schedule = "https://data.edmonton.ca/resource/greh-g7ac.json"
-
 def distance(lon1, lat1, lon2, lat2):
-    R = 6371000  # radius of the Earth in m
+    R = 6371000
     lon1 = float(lon1)
     lat1 = float(lat1)
     lon2 = float(lon2)
@@ -53,6 +72,3 @@ def distance(lon1, lat1, lon2, lat2):
     x = (lon2 - lon1) * cos(0.5*(lat2+lat1))
     y = (lat2 - lat1)
     return R * sqrt(x*x + y*y)
-
-
-get_stop_times("11713 17 Ave. SW Edmonton, Alberta, Canada")
