@@ -23,7 +23,6 @@ def get_stop_times(address):
                     time = each.departure.time
                     if not time:
                         time = each.arrival.time
-                    print(entity)
                     location = find_bus_location(entity.id)
                     stop_results[i].append([entity.trip_update.trip.route_id, location, time])
         i += 1
@@ -32,7 +31,7 @@ def get_stop_times(address):
     for i in range(len(stop_results)):
         stop_results_json[i] = stop_results[i]
     
-    print(stop_results_json)
+    return stop_results_json
 
 def find_bus_location(trip_id):
     live_position_url = "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.pb"
@@ -72,3 +71,6 @@ def distance(lon1, lat1, lon2, lat2):
     x = (lon2 - lon1) * cos(0.5*(lat2+lat1))
     y = (lat2 - lat1)
     return R * sqrt(x*x + y*y)
+
+a = get_stop_times("2333 Casey Crescent SW. Edmonton, AB, Canada")
+print(a)
