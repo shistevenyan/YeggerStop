@@ -1,38 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+
 .App {
-  text-align: center;
+  text-align: left;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --off-white: #fafafa;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 5.5em;
+
+  @media screen and (max-width: 576px) {
+    font-size: 2em;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 4em;
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  @media screen and (max-width: 576px) {
+    font-size: 1.5em;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+h4 {
+  font-family: 'Raleway', sans-serif;
+  font-size:1.5em;
+  color: grey;
+
+  @media screen and (max-width: 576px) {
+    font-size: 1em;
+  }
+}
+
+p.home-context {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: grey;
+
+  @media screen and (max-width: 576px) {
+    font-size: 0.8em;
+  }
+}
+
+p.projects-context {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  color: grey;
+
+  @media screen and (max-width: 576px) {
+    font-size: 0.8em;
+  }
+}
+
+p.contact-context {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: grey;
+
+  @media screen and (max-width: 576px) {
+    font-size: 0.8em;
   }
 }
