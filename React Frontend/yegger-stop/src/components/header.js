@@ -4,13 +4,13 @@ import Nav from "react-bootstrap/Nav";
 import '../styles/header.scss';
 
 
-class Navbar extends Component {
+class Header extends Component {
     render() {
         return (
             <div className="navbar-wrapper">
-                <BSNavbar collapseOnSelect expand="sm">
+                <BSNavbar class="navbar navbar-light bg-light" collapseOnSelect expand="sm">
                     <BSNavbar.Brand className="logo">
-                        YeggerStop
+                        YS
                     </BSNavbar.Brand>
                     <BSNavbar.Toggle aria-controls="responsive-navbar-nav" />
                     <BSNavbar.Collapse id="responsive-navbar-nav">
@@ -26,4 +26,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default Header;
