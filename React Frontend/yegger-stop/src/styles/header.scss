@@ -1,7 +1,3 @@
-.nav-logo:hover {
-  cursor: pointer;
-}
-
 .navbar-wrapper {
   margin-top: 1%;
   position: sticky;
@@ -28,12 +24,12 @@
   padding-left: 30px !important; 
   font-size: 1.2em;
   text-align: center;
-  color: black;
+  color: #001AFF !important;
   font-weight: 500;
   margin-top: 4px;
   
 
   &:hover {
-      color: black;
+      color: #154360 !important;
   }
 }
