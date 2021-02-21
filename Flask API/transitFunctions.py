@@ -4,8 +4,9 @@ import datetime
 import pytz
 from math import cos, sqrt
 from google.transit import gtfs_realtime_pb2
+import timeit
 
-def get_stop_times(address):
+def get_data(address):
     stop_results = {}
     closest_stops = find_closest_stops(address)
 
@@ -14,12 +15,13 @@ def get_stop_times(address):
     live_stop_response = requests.get(live_stop_url)
     live_stop_feed.ParseFromString(live_stop_response.content)
 
-    i = 0
+    i = 1
     for stop in closest_stops:
         one_stop_result = {}
         bus_times = []
         one_stop_result["stop_id"] = stop['stop_id']
         one_stop_result["stop_name"] = stop["stop_name"]
+
         for entity in live_stop_feed.entity:
             for each in entity.trip_update.stop_time_update:
                 if each.stop_id == stop["stop_id"]:
@@ -27,18 +29,40 @@ def get_stop_times(address):
                     if not time:
                         time = each.arrival.time
                     bus_times.append([entity.trip_update.trip.route_id, time])
-            one_stop_result["bus_times"] = bus_times
+            one_stop_result["live_bus_times"] = bus_times
         
         stop_results["stop_" + str(i)] = one_stop_result
         i += 1
     
     return stop_results
 
+def find_routes(stop_id):
+    all_trips_url = "https://data.edmonton.ca/resource/ctwr-tvrd.json?$limit=50000"
+    all_trips_response = requests.get(all_trips_url)
+    all_trips_data = all_trips_response.json()
+
+    static_time_url = "https://data.edmonton.ca/resource/greh-g7ac.json?$limit=2000000"
+    static_time_response = requests.get(static_time_url)
+    static_time_data = static_time_response.json()
+
+    trip_ids = []
+    available_routes = []
+
+    for time in static_time_data:
+        if time["stop_id"] == stop_id:
+            trip_ids.append(time["trip_id"])
+    
+    for trip in trip_ids:
+        for data in all_trips_data:
+            if trip == data["trip_id"]:
+                available_routes.append(data["route_id"])
+    
+    
+    print(list(set(available_routes)))
+
 
 def find_closest_stops(address):
-    response = requests.get(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&sensor=false&key=AIzaSyCojSgnjODZ71ywFILooMge4RtrVeDh2TQ')
-
+    response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&sensor=false&key=AIzaSyCojSgnjODZ71ywFILooMge4RtrVeDh2TQ')
     lat_long_response = response.json()
     lat_long_address = lat_long_response['results'][0]['geometry']['location']
     static_stop_url = "https://data.edmonton.ca/resource/kgzg-mxv6.json?$limit=10000"
@@ -59,6 +83,12 @@ def distance(lon1, lat1, lon2, lat2):
     y = (lat2 - lat1)
     return R * sqrt(x*x + y*y)
 
+# a = get_data("11713 17 Ave. SW Edmonton, Alberta, Canada")
+# print(a)
 
-a = get_stop_times("1975 111 St NW Edmonton, AB, Canada")
-print(a)
+
+start = timeit.default_timer()
+find_routes("9828")
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
