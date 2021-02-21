@@ -13,8 +13,11 @@ class App extends Component {
     return (
       
       <Container className="App">
-        
-        <Header />
+
+        <Col md={12} className="info">
+          YeggerStop is a live-time Edmonton Transit System bus stop and bus time finder. Enter an address in the search bar to find the 3 closest bus stops and its respective bus times. 
+          Click <a style={{ "color":"yellow" }} href={"https://github.com/shistevenyan"}> here</a> for the Github repository.
+        </Col>
 
         <Row>
           <TitlePage />

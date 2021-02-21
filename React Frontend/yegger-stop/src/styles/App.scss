@@ -3,70 +3,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
 
 .App {
-  text-align: left;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
 :root {
   --off-white: #fafafa;
 }
 
-h1 {
-  font-family: 'Inter', sans-serif;
-  font-size: 5.5em;
-
-  @media screen and (max-width: 576px) {
-    font-size: 2em;
-  }
-}
-
-h2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 4em;
-
-  @media screen and (max-width: 576px) {
-    font-size: 1.5em;
-  }
-}
-
-h4 {
-  font-family: 'Raleway', sans-serif;
-  font-size:1.5em;
-  color: grey;
-
-  @media screen and (max-width: 576px) {
-    font-size: 1em;
-  }
-}
-
-p.home-context {
-  font-family: 'Raleway', sans-serif;
-  font-weight: bold;
-  font-size: 1.5em;
-  color: grey;
-
-  @media screen and (max-width: 576px) {
-    font-size: 0.8em;
-  }
-}
-
-p.projects-context {
-  font-family: 'Raleway', sans-serif;
-  font-weight: bold;
+.info {
+  position: absolute;
+  background-color: #001AFF;
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: white;
   font-size: 1em;
-  color: grey;
-
-  @media screen and (max-width: 576px) {
-    font-size: 0.8em;
-  }
-}
-
-p.contact-context {
-  font-family: 'Raleway', sans-serif;
+  padding: 20pt;
   font-weight: bold;
-  font-size: 1.5em;
-  color: grey;
-
-  @media screen and (max-width: 576px) {
-    font-size: 0.8em;
-  }
 }
