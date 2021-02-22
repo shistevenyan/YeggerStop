@@ -1,33 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
 
-// *{
-//     margin: 0;
-//     padding: 0;
-// }
+.control {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    height: 10%;
+    background: none;
+    border: 2px solid blue;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    color: #001AFF;
+    padding: 1%;
+    margin-top: 2%;
+    margin-left: 10px;
+    margin-right: 10px;
 
-// .location-search-input {
-//     font-family: 'Inter', sans-serif;
-//     width: 100%;
-//     height: 50px;
-//     background: none;
-//     border: 2px solid #001AFF;
-//     border-radius: 5px;
-//     font-size: 1.4rem;
-//     color: #001AFF;
-//     padding: 1%;
-//     margin-top: 50%;
-// }
+}
 
-// ::placeholder {
-//     font-family: 'Inter', sans-serif;
-//     color: #001AFF;
-// }
+.control:focus {
+    outline: none !important;
+    border:1px solid #001AFF;
+    box-shadow: 0 0 10px #719ECE;
+}
 
-// .input-suggestion {
-//     font-family: 'Inter', sans-serif;
-//     color: #001AFF;
-//     width: 100%;
-//     padding: 1%;
-//     display: flex;
-//     align-items: center;
-// }
+::placeholder {
+    font-family: 'Inter', sans-serif;
+    color: #001AFF;
+}
+

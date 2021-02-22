@@ -1,71 +1,37 @@
-import React, { Component } from 'react';
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-} from 'react-places-autocomplete';
-import '../styles/searchBar.scss';
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
+import React, { Component } from "react";
+import "../styles/searchBar.scss";
 
 class SearchBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { address: '' };
-    }
-
-    handleChange = address => {
-        this.setState({ address });
+    state = {
+        location: ""
     };
 
-    handleSelect = address => {
-        geocodeByAddress(address)
-            .then(results => getLatLng(results[0]))
-            .then(latLng => console.log('Success', latLng))
-            .catch(error => console.error('Error', error));
+    componentDidMount() {
+        const app = this;
+        function initAutocomplete() {
+            var input = document.getElementById("pac-input");
+            var searchBox = new window.google.maps.places.SearchBox(input);
+            searchBox.addListener("places_changed", function () {
+                app.setState({ location: document.getElementById("pac-input").value });
+            });
+        }
+        initAutocomplete();
+    }
+
+    handleChange = e => {
+        this.setState({ location: e.target.value });
     };
 
     render() {
         return (
-            <Container className="searchBar">
-                <PlacesAutocomplete
-                    value={this.state.address}
-                    onChange={this.handleChange}
-                    onSelect={this.handleSelect}
-                >
-                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                        <Row>
-                            <input type="text" className='location-search-input' placeholder='Enter Address'
-                                {...getInputProps({
-                                })}
-                            />
-                            <Container className="autocomplete-dropdown-container"> 
-                                {loading && <Row className="input-suggestion">Loading...</Row>}
-                                {suggestions.map(suggestion => {
-                                    const className = suggestion.active
-                                        ? 'suggestion-item--active'
-                                        : 'suggestion-item';
-                                    // inline style for demonstration purpose
-                                    const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                    return (
-                                        <Row className="input-suggestion"
-                                            {...getSuggestionItemProps(suggestion, {
-                                                style,
-                                            })}
-                                        >
-                                            <span>{suggestion.description}</span>
-                                        </Row>
-                                    );
-                                })}
-                            </Container>
-                        </Row>
-                    )}
-                </PlacesAutocomplete>
-            </Container>
+            <input
+                defaultValue={this.state.location}
+                onChange={this.handleChange}
+                id="pac-input"
+                className="control"
+                type="text"
+                placeholder="Enter Address"
+            />
         );
     }
 }
