@@ -41,24 +41,30 @@ def find_routes(stop_id):
     all_trips_response = requests.get(all_trips_url)
     all_trips_data = all_trips_response.json()
 
-    static_time_url = "https://data.edmonton.ca/resource/greh-g7ac.json?$limit=2000000"
+    static_time_url = "https://data.edmonton.ca/resource/greh-g7ac.json?$limit=20000"
     static_time_response = requests.get(static_time_url)
     static_time_data = static_time_response.json()
 
-    trip_ids = []
-    available_routes = []
+    trip_dict = {}
 
+    i = 0
     for time in static_time_data:
-        if time["stop_id"] == stop_id:
-            trip_ids.append(time["trip_id"])
+        if time["stop_id"] in trip_dict:
+            for data in all_trips_data:
+                if time["trip_id"] == data["trip_id"]:
+                    trip_dict[time["stop_id"]].append(data["route_id"])
+        else:
+            for data in all_trips_data:
+                if time["trip_id"] == data["trip_id"]:
+                    trip_dict[time["stop_id"]] = [data["route_id"]]
+        print(i)
+        i += 1
     
-    for trip in trip_ids:
-        for data in all_trips_data:
-            if trip == data["trip_id"]:
-                available_routes.append(data["route_id"])
-    
-    
-    print(list(set(available_routes)))
+    for each in trip_dict:
+        trip_dict[each] = list(set(trip_dict[each]))
+
+    with open('myfile.txt', 'w') as f:
+        print(trip_dict, file=f)
 
 
 def find_closest_stops(address):
