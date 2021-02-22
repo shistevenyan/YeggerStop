@@ -3,10 +3,12 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
+import '../styles/searchBar.scss';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 
 class SearchBar extends Component {
     constructor(props) {
@@ -27,7 +29,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <Container>
+            <Container className="searchBar">
                 <PlacesAutocomplete
                     value={this.state.address}
                     onChange={this.handleChange}
@@ -35,14 +37,12 @@ class SearchBar extends Component {
                 >
                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                         <Row>
-                            <input
+                            <input type="text" className='location-search-input' placeholder='Enter Address'
                                 {...getInputProps({
-                                    placeholder: 'Enter Address',
-                                    className: 'location-search-input',
                                 })}
                             />
                             <Container className="autocomplete-dropdown-container"> 
-                                {loading && <div>Loading...</div>}
+                                {loading && <Row className="input-suggestion">Loading...</Row>}
                                 {suggestions.map(suggestion => {
                                     const className = suggestion.active
                                         ? 'suggestion-item--active'
@@ -52,7 +52,7 @@ class SearchBar extends Component {
                                         ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                                         : { backgroundColor: '#ffffff', cursor: 'pointer' };
                                     return (
-                                        <Row className="input_suggestion"
+                                        <Row className="input-suggestion"
                                             {...getSuggestionItemProps(suggestion, {
                                                 style,
                                             })}
