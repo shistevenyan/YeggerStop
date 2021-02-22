@@ -36,12 +36,12 @@ def get_data(address):
     
     return stop_results
 
-def find_routes(stop_id):
+def find_routes():
     all_trips_url = "https://data.edmonton.ca/resource/ctwr-tvrd.json?$limit=50000"
     all_trips_response = requests.get(all_trips_url)
     all_trips_data = all_trips_response.json()
 
-    static_time_url = "https://data.edmonton.ca/resource/greh-g7ac.json?$limit=20000"
+    static_time_url = "https://data.edmonton.ca/resource/greh-g7ac.json?$limit=2000000"
     static_time_response = requests.get(static_time_url)
     static_time_data = static_time_response.json()
 
@@ -63,7 +63,7 @@ def find_routes(stop_id):
     for each in trip_dict:
         trip_dict[each] = list(set(trip_dict[each]))
 
-    with open('myfile.txt', 'w') as f:
+    with open('routes.txt', 'w') as f:
         print(trip_dict, file=f)
 
 
@@ -94,7 +94,7 @@ def distance(lon1, lat1, lon2, lat2):
 
 
 start = timeit.default_timer()
-find_routes("9828")
+find_routes()
 stop = timeit.default_timer()
 
 print('Time: ', stop - start)
