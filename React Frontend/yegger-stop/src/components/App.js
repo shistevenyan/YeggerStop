@@ -24,7 +24,6 @@ class App extends Component {
           <img responsive src={Logo} className="logo" alt="logo" />
         </Row>
         
-
         <Row>
           <SearchBar />
         </Row>
