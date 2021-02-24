@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../styles/searchBar.scss";
-import ReactDOM from 'react-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -29,18 +28,16 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <Container>
-                <form action="http://localhost:5000/address" method="get">
-                    <input
-                        defaultValue={this.state.location}
-                        onChange={this.handleChange}
-                        id="pac-input"
-                        className="control"
-                        name="address"
-                        type="text"
-                        placeholder="Enter Address"
-                    />
-                </form>
+            <Container fluid={true}>
+                <input
+                    defaultValue={this.state.location}
+                    onChange={this.handleChange}
+                    id="pac-input"
+                    className="control"
+                    name="address"
+                    type="text"
+                    placeholder="Enter Address"
+                />
             </Container>
         );
     }
