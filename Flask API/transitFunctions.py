@@ -6,7 +6,7 @@ from math import cos, sqrt
 from google.transit import gtfs_realtime_pb2
 
 def get_data(address):
-    stop_results = {}
+    stop_results = []
     closest_stops = find_closest_stops(address)
 
     with open('routes.txt', 'r') as inf:
@@ -39,10 +39,11 @@ def get_data(address):
                     bus_times.append([entity.trip_update.trip.route_id, read_time])
             one_stop_result["live_bus_times"] = bus_times
         
-        stop_results["stop_" + str(i)] = one_stop_result
-        i += 1
+        stop_results.append(one_stop_result)
+
+    data = {"results": stop_results}
     
-    return stop_results
+    return data
 
 
 def find_routes():

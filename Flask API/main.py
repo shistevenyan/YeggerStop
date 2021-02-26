@@ -2,18 +2,20 @@ from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort
 from google.transit import gtfs_realtime_pb2
 from transitFunctions import *
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 
 
-@app.route('/address', methods=['GET', 'POST'])
-
-def address():
+@app.route('/stop_results', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def stop_results():
     if request.method == 'GET':
-        address = request.args.get('address', None)
+        address = request.args.get('address')
         if address:
-            return address
-        return "No place information is given"
+            return get_data(address)
+        return {"results": [], "error_message": "No address given"}, 400
 
 
 if __name__ == '__main__':

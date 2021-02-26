@@ -3,12 +3,23 @@ import '../styles/App.scss';
 import Logo from '../styles/YeggerStopLogo.png';
 
 import SearchBar from './searchBar.js'
+import Results from './results.js'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
 class App extends Component {
+  state = {
+    result: []
+  };
+
+  handleEnter = (address) => {
+    fetch(`http://127.0.0.1:5000/stop_results?address=${address}`)
+      .then(response => response.json())
+      .then(data => this.setState({ result: data.result }));
+  }
+
   render() {
     
     return (
@@ -25,8 +36,14 @@ class App extends Component {
         </Row>
         
         <Row>
-          <SearchBar />
+          <SearchBar onEnter={this.handleEnter} />
         </Row>
+
+        <Row>
+          <Results data={ this.state.result } />
+        </Row>
+
+        
         
         
       </Container>

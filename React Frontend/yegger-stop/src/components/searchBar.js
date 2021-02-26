@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import "../styles/searchBar.scss";
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 class SearchBar extends Component {
+    
     state = {
         location: ""
     };
@@ -16,7 +15,9 @@ class SearchBar extends Component {
             var input = document.getElementById("pac-input");
             var searchBox = new window.google.maps.places.SearchBox(input);
             searchBox.addListener("places_changed", function () {
-                app.setState({ location: document.getElementById("pac-input").value });
+                var address = document.getElementById("pac-input").value
+                app.setState({ location: address });
+                app.props.onEnter(address)
             });
         }
         initAutocomplete();
