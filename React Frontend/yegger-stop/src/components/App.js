@@ -11,14 +11,15 @@ import Col from 'react-bootstrap/Col';
 
 class App extends Component {
   state = {
-    result: []
+    results: []
   };
 
   handleEnter = (address) => {
     fetch(`http://127.0.0.1:5000/stop_results?address=${address}`)
       .then(response => response.json())
-      .then(data => this.setState({ result: data.result }));
+      .then(data => { this.setState({ results: data.results }); console.log(data)} );
   }
+
 
   render() {
     
@@ -39,9 +40,25 @@ class App extends Component {
           <SearchBar onEnter={this.handleEnter} />
         </Row>
 
+        { ((this.state.results).length > 0 ? 
+
         <Row>
-          <Results data={ this.state.result } />
-        </Row>
+          <Col>
+              <Results data={this.state.results[0]} />
+          </Col>
+
+          <Col>
+            <Results data={this.state.results[1]} />
+          </Col>
+
+          <Col>
+            <Results data={this.state.results[2]} />
+          </Col>
+          
+        </Row> 
+        : 
+        null) }
+        
 
         
         

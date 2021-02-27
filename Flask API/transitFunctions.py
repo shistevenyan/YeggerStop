@@ -25,7 +25,16 @@ def get_data(address):
         one_stop_result["stop_name"] = stop["stop_name"]
         one_stop_result["lat"] = float(stop["stop_lat"])
         one_stop_result["long"] = float(stop["stop_lon"])
-        one_stop_result["available_routes"] = route_dict[stop['stop_id']]
+
+        available_routes = []
+        for route in route_dict[stop['stop_id']]:
+            if len(route) == 1:
+                route = "00" + route
+            if len(route) == 2:
+                route = "0" + route
+            available_routes.append(route)
+            
+        one_stop_result["available_routes"] = available_routes
         
         for entity in live_stop_feed.entity:
             for each in entity.trip_update.stop_time_update:
