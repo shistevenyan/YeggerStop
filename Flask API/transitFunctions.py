@@ -45,8 +45,15 @@ def get_data(address):
                     
                     timezone = pytz.timezone("Canada/Mountain")
                     read_time = datetime.fromtimestamp(int(time), timezone).strftime("%H:%M")
-                    bus_times.append([entity.trip_update.trip.route_id, read_time])
-            one_stop_result["live_bus_times"] = bus_times
+                    route_id = entity.trip_update.trip.route_id
+
+                    bus_times.append([route_id, read_time])
+            
+
+        if not bus_times:
+            bus_times.append(["None", "this time"])
+            
+        one_stop_result["live_bus_times"] = bus_times
         
         stop_results.append(one_stop_result)
 

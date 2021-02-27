@@ -8,7 +8,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-
 class App extends Component {
   state = {
     results: []
@@ -33,25 +32,29 @@ class App extends Component {
         </Col>
 
         <Row className="logo-container">
-          <img responsive src={Logo} className="logo" alt="logo" />
+          <Col>
+            <img responsive src={Logo} className="logo" alt="logo" />
+          </Col>
         </Row>
         
         <Row>
-          <SearchBar onEnter={this.handleEnter} />
+          <Col>
+            <SearchBar onEnter={this.handleEnter} />
+          </Col>
         </Row>
 
         { ((this.state.results).length > 0 ? 
 
         <Row>
-          <Col>
+          <Col sm={12} md={4}>
               <Results data={this.state.results[0]} />
           </Col>
 
-          <Col>
+          <Col sm={12} md={4}>
             <Results data={this.state.results[1]} />
           </Col>
 
-          <Col>
+          <Col sm={12} md={4}>
             <Results data={this.state.results[2]} />
           </Col>
           

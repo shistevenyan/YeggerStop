@@ -1,35 +1,35 @@
 import React, { Component } from "react";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import '../styles/results.scss';
+import Col from 'react-bootstrap/Col';
 
 class Results extends Component {
     
     
     render() {
         return (
-            <Card>
+            <Card border="primary" className="card">
 
-                <Card.Title> 
+                <Card.Title className="card-title"> 
                     {this.props.data.stop_name} 
                 </Card.Title>
 
-                <Card.Subtitle className="mb-2 text-muted"> 
+                <Card.Subtitle className="card-subtitle"> 
                     Bus Stop ID: {this.props.data.stop_id} 
+                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${this.props.data.lat},${this.props.data.long}`}> (Navigate)</a>
                 </Card.Subtitle>
-
-                <Card.Text>
+                <br></br>
+                <Card.Text className="card-text">
                     Live Buses: { this.props.data.live_bus_times.map(function(bus, index) { 
                         return <li key={ index }>{bus[0]} arriving at {bus[1]} </li>
                     })}
                     
                 </Card.Text>
                 
-                <Card.Text>
-                    Available Buses:               
+                <Card.Text className="card-text">
+                    Available Buses at Stop:               
                     { this.props.data.available_routes.map(function(route, index) { 
-                        return  <li><Card.Link key={index} href={`https://webdocs.edmonton.ca/transit/route_schedules_and_maps/current/RT${route}.pdf`}> {route}</Card.Link></li>
+                        return  <li key={ index }><Card.Link href={`https://webdocs.edmonton.ca/transit/route_schedules_and_maps/current/RT${route}.pdf`}> {route}</Card.Link></li>
                     })}
                 </Card.Text>
                 

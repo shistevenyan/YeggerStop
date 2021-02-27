@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+.card {
+    padding: 5%;
+    margin-top: 30%;
+    margin-bottom: 3%;
+
+    @media screen and (max-width: 576px) {
+        margin-top: 10%;
+  }
+}
+
+.card-title {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+
+.card-subtitle {
+    font-family: "Inter", sans-serif;
+    color: gray;
+}
+
+.card-text {
+    font-family: "Inter", sans-serif;
+}
