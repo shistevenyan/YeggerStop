@@ -17,7 +17,6 @@ def get_data(address):
     live_stop_response = requests.get(live_stop_url)
     live_stop_feed.ParseFromString(live_stop_response.content)
 
-    i = 1
     for stop in closest_stops:
         one_stop_result = {}
         bus_times = []
