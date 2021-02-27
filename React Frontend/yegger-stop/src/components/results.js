@@ -8,7 +8,7 @@ class Results extends Component {
     
     render() {
         return (
-            <Card border="primary" className="card">
+            <Card border="light" className="card">
 
                 <Card.Title className="card-title"> 
                     {this.props.data.stop_name} 

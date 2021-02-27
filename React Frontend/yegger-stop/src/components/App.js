@@ -7,6 +7,7 @@ import Results from './results.js'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import scrollToComponent from 'react-scroll-to-component';
 
 class App extends Component {
   state = {
@@ -17,6 +18,10 @@ class App extends Component {
     fetch(`http://127.0.0.1:5000/stop_results?address=${address}`)
       .then(response => response.json())
       .then(data => { this.setState({ results: data.results }); console.log(data)} );
+  }
+
+  componentDidUpdate() {
+    scrollToComponent(this.results, { offset: 0, align: "top", duration: 500, ease: "out-circ" });
   }
 
 
@@ -45,16 +50,16 @@ class App extends Component {
 
         { ((this.state.results).length > 0 ? 
 
-        <Row>
-          <Col sm={12} md={4}>
+          <Row className="results-space" ref={(Col) => { this.results = Col; }}>
+          <Col sm={12} md={12}>
               <Results data={this.state.results[0]} />
           </Col>
 
-          <Col sm={12} md={4}>
+          <Col sm={12} md={12}>
             <Results data={this.state.results[1]} />
           </Col>
 
-          <Col sm={12} md={4}>
+          <Col sm={12} md={12}>
             <Results data={this.state.results[2]} />
           </Col>
           
