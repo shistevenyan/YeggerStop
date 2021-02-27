@@ -33,7 +33,7 @@ class App extends Component {
 
         <Col md = {12} className="info">
           YeggerStop is an live-time ETS transit app. Enter an address in the search bar to find close by buses. 
-          Click <a style={{ "color": "yellow" }} href={"https://github.com/shistevenyan"}> here</a> for the Github repository and click <a style={{ "color": "yellow" }} href={"http://www.linkedin.com/in/shistevenyan"}> here</a> for my creator. 
+          Click <a style={{ "color": "yellow" }} href={"https://github.com/shistevenyan/YeggerStop"}> here</a> for the Github repository and click <a style={{ "color": "yellow" }} href={"http://www.linkedin.com/in/shistevenyan"}> here</a> for my creator. 
         </Col>
 
         <Row className="logo-container">
