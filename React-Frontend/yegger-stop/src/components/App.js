@@ -15,7 +15,7 @@ class App extends Component {
   };
 
   handleEnter = (address) => {
-    fetch(`http://127.0.0.1:5000/stop_results?address=${address}`)
+    fetch(`https://yeggerstop.herokuapp.com/stop_results?address=${address}`)
       .then(response => response.json())
       .then(data => { this.setState({ results: data.results }); console.log(data)} );
   }
@@ -32,7 +32,7 @@ class App extends Component {
       <Container className="App">
 
         <Col md = {12} className="info">
-          YeggerStop is an live-time ETS transit app. Enter an address in the search bar to close by buses. 
+          YeggerStop is an live-time ETS transit app. Enter an address in the search bar to find close by buses. 
           Click <a style={{ "color": "yellow" }} href={"https://github.com/shistevenyan"}> here</a> for the Github repository and click <a style={{ "color": "yellow" }} href={"http://www.linkedin.com/in/shistevenyan"}> here</a> for my creator. 
         </Col>
 
