@@ -3,8 +3,7 @@ import Card from 'react-bootstrap/Card';
 import '../styles/results.scss';
 
 class Results extends Component {
-    
-    
+    // Init a Bootstrap card component to display the results
     render() {
         return (
             <Card border="light" className="card">
