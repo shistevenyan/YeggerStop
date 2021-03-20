@@ -8,6 +8,7 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 
+# defining the route that the heroku app url needs to go to yeggerstop.heroku.app/stopresults...
 @app.route('/stop_results', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def stop_results():

@@ -6,9 +6,11 @@ from math import cos, sqrt
 from google.transit import gtfs_realtime_pb2
 
 def get_data(address):
+    # the main function that takes in the address and outputs the necessary data
     stop_results = []
     closest_stops = find_closest_stops(address)
 
+    # temporary fix, need to create a database to store these values
     with open('routes.txt', 'r') as inf:
         route_dict = eval(inf.read())
 
@@ -17,6 +19,7 @@ def get_data(address):
     live_stop_response = requests.get(live_stop_url)
     live_stop_feed.ParseFromString(live_stop_response.content)
 
+    # recording the data of the 3 closest stops
     for stop in closest_stops:
         one_stop_result = {}
         bus_times = []
@@ -25,6 +28,7 @@ def get_data(address):
         one_stop_result["lat"] = float(stop["stop_lat"])
         one_stop_result["long"] = float(stop["stop_lon"])
 
+        # format string such that the route id is len of 3, in order for ETS brochures to work
         available_routes = []
         for route in route_dict[stop['stop_id']]:
             if len(route) == 1:
@@ -35,6 +39,7 @@ def get_data(address):
             
         one_stop_result["available_routes"] = available_routes
         
+        # getting the live time of the buses
         for entity in live_stop_feed.entity:
             for each in entity.trip_update.stop_time_update:
                 if each.stop_id == stop["stop_id"]:
@@ -42,10 +47,12 @@ def get_data(address):
                     if not time:
                         time = each.arrival.time
                     
+                    # need to translate unix time to readable time
                     timezone = pytz.timezone("Canada/Mountain")
                     read_time = datetime.fromtimestamp(int(time), timezone).strftime("%H:%M")
                     route_id = entity.trip_update.trip.route_id
 
+                    # append the route id with the time that it will get to the bus stop
                     bus_times.append([route_id, read_time])
             
 
